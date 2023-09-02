@@ -1,9 +1,9 @@
-export interface Task {
+interface Task {
     id: number,
     value: string,
 }
 
-export interface EventDate {
+interface EventDate {
     id: number,
     value: string,
 }

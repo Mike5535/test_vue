@@ -7,9 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import EventTable from './components/EventTable.vue';
+import EventTable from '@components/EventTable.vue';
 import { ref } from 'vue';
-import { EventDate, Task } from './types';
 
 const tasks = ref<Array<Task>>([{
   id: 1,
