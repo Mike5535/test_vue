@@ -13,7 +13,7 @@ interface Status {
     value: string,
 }
 
-interface Event {
+interface TableEvent {
     dateId: number,
     taskId: number,
 }

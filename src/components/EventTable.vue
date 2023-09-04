@@ -25,7 +25,7 @@
         <input @submit.prevent @keydown="onKeyDown($event, dates[i])" @keyup="onKeyUp" v-model="dates[i].value"
           class='b-table__cell__input' :style="{ width: dates[i].value.length + 'ch' }">
       </div>
-      <div v-for="(curTaskObj, i) in tasks" :key="curTaskObj.id" class='b-table__cell'>
+      <div v-for="curTaskObj in tasks" :key="curTaskObj.id" class='b-table__cell'>
         <StatusList 
           v-if="getEvent(curDataObj.id, curTaskObj.id)"  
           :statuses="statuses"
@@ -34,10 +34,7 @@
           :icon="['fas', 'plus']" 
           size="sm" 
           class='b-table__button-add'
-          @click="events.push({
-            dateId: curDataObj.id,
-            taskId: curTaskObj.id,
-          })"
+          @click="onAddEvent(curDataObj.id, curTaskObj.id)"
         />
       </div>
     </div>
@@ -48,7 +45,7 @@
           class='b-table__button-add'
           @click="dates.push({
             id: dates[dates.length - 1].id + 1,
-            value: dateFormat(new Date(), 'dd.mm.yyyy'),
+            value: dateFormat(new Date(), 'dd.mm.yyyy' as DateFormat),
           })"
         />
       </div>
@@ -57,7 +54,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import StatusList from '@components/StatusList.vue';
+import StatusList from './StatusList.vue';
 import { dateFormat } from '@utils/dateFormat';
 
 const tasks = ref<Array<Task>>([{
@@ -82,7 +79,7 @@ const statuses = ref<Array<Status>>([
     value: 'Close'
   },
 ]);
-const events = ref<Array<Event>>([]);
+const tableEvents = ref<Array<TableEvent>>([]);
 
 function onKeyDown(e: Event, valueObj: { value: string }) {
   const target = e.target as HTMLInputElement;
@@ -105,8 +102,16 @@ function onKeyUp(e: Event) {
 }
 
 function getEvent(dateId: number, taskId: number) {
-    return events.value.find(e => e.dateId === dateId && e.taskId === taskId);
-  }
+  return tableEvents.value.find(e => e.dateId === dateId && e.taskId === taskId);
+}
+
+function onAddEvent(dateId: number, taskId: number) {
+  tableEvents.value.push({
+    dateId,
+    taskId,
+  })
+}
+
 </script>
 
 <style scoped lang="scss">

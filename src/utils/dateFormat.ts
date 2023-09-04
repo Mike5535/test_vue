@@ -1,5 +1,5 @@
 export const dateFormat = (date: Date, format: DateFormat) => {
-    let resData = null;
+    let resData = '';
     switch(format) {
         case('dd.mm.yyyy'):
             let days = date.getDay().toString();
